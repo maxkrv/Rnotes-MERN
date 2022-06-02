@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import NotFound from "./pages/NotFound";
+import Layout from "./components/Layout";
+import AppPage from "./pages/AppPage";
+import RegisterPage from "./pages/RegisterPage";
+import NoteList from "./components/NoteList";
+import TodoList from "./components/TodoList";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App: FC = () => {
+	return (
+		<>
+			<Routes>
+				<Route path="/" element={<Layout />}>
+					<Route index element={<Navigate to="app/notes" />} />
+					<Route path="app" element={<Navigate to="/" />} />
+					<Route path="app/:page" element={<AppPage />} />
+					<Route path="login" element={<LoginPage />} />
+					<Route path="register" element={<RegisterPage />} />
+					<Route path="notes" element={<NoteList />} />
+					<Route path="todos" element={<TodoList />} />
+					<Route path="*" element={<NotFound />} />
+				</Route>
+			</Routes>
+		</>
+	);
+};
 
 export default App;
