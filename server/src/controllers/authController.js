@@ -28,7 +28,7 @@ export default class authController {
 			if (candidate) {
 				return res
 					.status(400)
-					.json({ message: "This email is already exist" });
+					.json({ message: "This email already exist" });
 			}
 
 			const hashedPassword = bcrypt.hashSync(password, 7);
