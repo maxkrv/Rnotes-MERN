@@ -1,30 +1,31 @@
 import { Router } from "express";
-import authController from "../controllers/authController.js";
 import { check } from "express-validator";
+import AuthController from "../controllers/AuthController.js";
 
 const authRoute = new Router();
 
 authRoute.post(
 	"/registration",
 	[
-		check("email", "can't be empty").notEmpty(),
-		check("email", "invalid email").isEmail(),
-		check("password", "can't be empty").notEmpty(),
-		check("password", "password must be from 6 to 20 characters").isLength({
+		check("email", "Can't be empty").notEmpty(),
+		check("email", "Invalid email").isEmail(),
+		check("password", "Can't be empty").notEmpty(),
+		check("password", "Password must be at least 6 characters").isLength({
 			min: 6,
-			max: 20,
 		}),
 	],
-	authController.registration
+	AuthController.registration
 );
 authRoute.post(
 	"/login",
 	[
-		check("email", "can't be empty").notEmpty(),
-		check("email", "invalid email").isEmail(),
-		check("password", "can't be empty").notEmpty(),
+		check("email", "Can't be empty").notEmpty(),
+		check("email", "Invalid email").isEmail(),
+		check("password", "Can't be empty").notEmpty(),
 	],
-	authController.login
+	AuthController.login
 );
+authRoute.post("/logout", AuthController.logout);
+authRoute.get("/refresh", AuthController.refresh);
 
 export default authRoute;
